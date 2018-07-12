@@ -2,12 +2,12 @@ package com.twu.biblioteca;
 
 import java.util.ArrayList;
 
-public class Library {
-    public ArrayList<Book> getListOfBooks() {
+class Library {
+    ArrayList<Book> getListOfBooks() {
         return ListOfBooks;
     }
 
-    public Library(ArrayList<Book> listOfBooks) {
+    Library(ArrayList<Book> listOfBooks) {
         ListOfBooks = listOfBooks;
     }
 
@@ -23,7 +23,7 @@ public class Library {
     }
 
 
-    public Book getBookFromTitle(String title) {
+    Book getBookFromTitle(String title) {
         for (Book book : ListOfBooks)
             if (title.equals(book.getTitle())) return book;
         return null;

@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-public class Book {
+class Book {
     Book(String title, String author, String year) {
         this.title = title;
         this.author = author;
@@ -33,7 +33,7 @@ public class Book {
         return isAvailable;
     }
 
-    void setAvailable(boolean available) {
+    private void setAvailable(boolean available) {
         isAvailable = available;
     }
 

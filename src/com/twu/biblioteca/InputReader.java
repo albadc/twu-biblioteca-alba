@@ -2,7 +2,7 @@ package com.twu.biblioteca;
 
 import java.util.Scanner;
 
-public class InputReader {
+class InputReader {
 
     int getUserNumber() {
         Scanner scanner = new Scanner(System.in);

@@ -3,7 +3,7 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Runner {
+class Runner {
     private static final String END_LINE = "\n";
     private static final String WELCOME_MESSAGE = "Welcome to Biblioteca!\n";
     private static final String MAIN_MENU = "Main Menu:\n" +
@@ -11,13 +11,13 @@ public class Runner {
             "2 - Check Out Book\n" +
             "3 - Return Book\n" +
             "4 - Quit\n";
-    public static final String TAB = "\t";
+    private static final String TAB = "\t";
 
 
     private InputReader inputReader;
     private Library library;
 
-    public Runner(Library library, InputReader inputReader) {
+    Runner(Library library, InputReader inputReader) {
         this.library = library;
         this.inputReader = inputReader;
     }
@@ -94,11 +94,11 @@ public class Runner {
 
     }
 
-    public void welcomeMessage() {
+    private void welcomeMessage() {
         System.out.println(WELCOME_MESSAGE);
     }
 
-    void showMainMenu() {
+    private void showMainMenu() {
         System.out.println(MAIN_MENU);
 
     }
