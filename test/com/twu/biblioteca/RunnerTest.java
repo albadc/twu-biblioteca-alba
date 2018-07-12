@@ -13,8 +13,9 @@ public class RunnerTest {
     Book book2 = new Book("We", "Yevgeni Zamiatin", "1924");
     ArrayList<Book> books = new ArrayList<>(Arrays.asList(book1, book2));
     Library library = new Library(books);
+    InputReader inputReader = new InputReader();
 
-    Runner runner = new Runner(library);
+    Runner runner = new Runner(library, inputReader);
 
     @Test
     public void successfulCheckOut() {

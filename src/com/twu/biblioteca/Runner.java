@@ -5,13 +5,21 @@ import java.util.Arrays;
 
 public class Runner {
     private static final String END_LINE = "\n";
+    private static final String WELCOME_MESSAGE = "Welcome to Biblioteca!\n";
+    private static final String MAIN_MENU = "Main Menu:\n" +
+            "1 - List Books\n" +
+            "2 - Check Out Book\n" +
+            "3 - Return Book\n" +
+            "4 - Quit\n";
+    public static final String TAB = "\t";
 
 
-    private InputReader inputReader = new InputReader();
+    private InputReader inputReader;
     private Library library;
 
-    public Runner(Library library) {
+    public Runner(Library library, InputReader inputReader) {
         this.library = library;
+        this.inputReader = inputReader;
     }
 
 
@@ -47,7 +55,7 @@ public class Runner {
             Book book = library.getBookFromTitle(bookTitle);
             if (!book.isAvailable()) {
                 book.returnBook();
-                System.out.println("Thank youfor returning the book");
+                System.out.println("Thank you for returning the book");
             }
             else System.out.println("That is not a valid book to return");
 
@@ -72,25 +80,26 @@ public class Runner {
     }
 
     private void showListOfBooks() {
-        System.out.println("Books currently in the library:");
-        for (Book book: library.getListOfBooks()) {
-            if (book.isAvailable()) {
-                System.out.println(book.getTitle() + END_LINE + book.getAuthor() + END_LINE + book.getYear() + END_LINE);
+        if (library.getListOfBooks().isEmpty()) {
+            System.out.println("There are currently no books in the library");
+        } else {
+            System.out.println("Books currently in the library:" + END_LINE);
+            System.out.println("Title" + TAB + "Author" + TAB + "Year" + END_LINE);
+            for (Book book : library.getListOfBooks()) {
+                if (book.isAvailable()) {
+                    System.out.println(book.getTitle() + TAB + book.getAuthor() + TAB + book.getYear() + TAB + END_LINE);
+                }
             }
         }
 
     }
 
     public void welcomeMessage() {
-        System.out.println("Welcome to Biblioteca!");
+        System.out.println(WELCOME_MESSAGE);
     }
 
     void showMainMenu() {
-        System.out.println("Main Menu:\n");
-        System.out.println("1 - List Books\n" +
-                "2 - Check Out Book\n" +
-                "3 - Return Book\n" +
-                "4- Quit\n");
+        System.out.println(MAIN_MENU);
 
     }
 }

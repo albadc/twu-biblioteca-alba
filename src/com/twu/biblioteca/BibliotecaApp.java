@@ -13,11 +13,16 @@ public class BibliotecaApp {
         Book book3 = new Book("Harry Potter and teh philosopher's stone", "J K Rowling", "1998");
         ArrayList<Book> books = new ArrayList<>(Arrays.asList(book1, book2));
         Library library = new Library(books);
+        InputReader inputReader = new InputReader();
+
+
+        ArrayList<Book> books2 = new ArrayList<>();
+        Library library2 = new Library(books2);
 
 
 
 
-        Runner runner = new Runner(library);
+        Runner runner = new Runner(library, inputReader);
         runner.Run();
 
 
