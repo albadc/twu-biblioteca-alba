@@ -10,7 +10,7 @@ public class BookTest {
 
     @Test
     public void bookIsCheckedOut() {
-        Book book = new Book("Moby Dick", "Herman Melville", "1851");
+        Book book = new Book("We", "Yevgeni Zamiatin", "1924");
 
         assertEquals(true, book.isAvailable());
         book.checkOut();
@@ -20,7 +20,7 @@ public class BookTest {
 
     @Test
     public void bookIsReturned() {
-        Book book = new Book("Moby Dick", "Herman Melville", "1851");
+        Book book = new Book("We", "Yevgeni Zamiatin", "1924");
         book.checkOut();
         book.returnBook();
 

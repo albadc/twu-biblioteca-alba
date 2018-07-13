@@ -1,8 +1,5 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 class Runner {
     private static final String END_LINE = "\n";
     private static final String WELCOME_MESSAGE = "Welcome to Biblioteca!\n";
@@ -15,11 +12,13 @@ class Runner {
 
 
     private InputReader inputReader;
+    private Printer printer;
     private Library library;
 
-    Runner(Library library, InputReader inputReader) {
+    Runner(Library library, InputReader inputReader, Printer printer) {
         this.library = library;
         this.inputReader = inputReader;
+        this.printer = printer;
     }
 
 
@@ -48,36 +47,37 @@ class Runner {
 
     }
 
-    private void returnBook() {
-        System.out.println("Please enter the name of the book you are returning" + END_LINE);
+    void returnBook() {
+        printer.initialReturnMessage();
         String bookTitle = inputReader.getBookTitle();
         if (library.bookIsInLibrary(bookTitle)) {
             Book book = library.getBookFromTitle(bookTitle);
             if (!book.isAvailable()) {
                 book.returnBook();
-                System.out.println("Thank you for returning the book");
+                printer.successfulReturnMessage();
             }
-            else System.out.println("That is not a valid book to return");
+            else printer.unsuccessfulReturnMessage();
 
         }
-        else System.out.println("That is not a valid book to return");
+        else printer.unsuccessfulReturnMessage();
     }
 
-    private void checkOutBook() {
-        System.out.println("Please enter the name of the book you want to check out" + END_LINE);
+    void checkOutBook() {
+        printer.initialCheckOutMessage();
         String bookTitle = inputReader.getBookTitle();
         if (library.bookIsInLibrary(bookTitle)) {
             Book book = library.getBookFromTitle(bookTitle);
             if (book.isAvailable()) {
                 book.checkOut();
-                System.out.println("Thank you! Enjoy the book");
+                printer.successfulCheckOutMessage();
             }
-            else System.out.println("That book is not available");
+            else printer.unsuccessfulCheckOutMessage();
 
         }
-        else System.out.println("That book is not available");
+        else printer.unsuccessfulCheckOutMessage();
 
     }
+
 
     private void showListOfBooks() {
         if (library.getListOfBooks().isEmpty()) {

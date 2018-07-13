@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 
 public class LibraryTest {
 
-    Book book1 = new Book("Moby Dick", "Herman Melville", "1851");
-    Book book2 = new Book("We", "Yevgeni Zamiatin", "1924");
-    Book book3 = new Book("Harry Potter and teh philosopher's stone", "J K Rowling", "1998");
+    Book book1 = new Book("We", "Yevgeni Zamiatin", "1924");
+    Book book2 = new Book("Master and Margarita", "Mikhail Bulgakov", "1967");
+    Book book3 = new Book("Death and the penguin", "Andrey Kurkov", "1996");
     ArrayList<Book> books = new ArrayList<>(Arrays.asList(book1, book2));
     Library library = new Library(books);
 
@@ -30,6 +30,6 @@ public class LibraryTest {
     @Test
     public void libraryGivesBookFromTitle() {
         String title = "We";
-        assertEquals(book2, library.getBookFromTitle(title));
+        assertEquals(book1, library.getBookFromTitle(title));
     }
 }

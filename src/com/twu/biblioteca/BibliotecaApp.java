@@ -8,12 +8,14 @@ public class BibliotecaApp {
     public static void main(String[] args) {
 
 
-        Book book1 = new Book("Moby Dick", "Herman Melville", "1851");
-        Book book2 = new Book("We", "Yevgeni Zamiatin", "1924");
-        Book book3 = new Book("Harry Potter and teh philosopher's stone", "J K Rowling", "1998");
+
+        Book book1 = new Book("We", "Yevgeni Zamiatin", "1924");
+        Book book2 = new Book("Master and Margarita", "Mikhail Bulgakov", "1967");
+        Book book3 = new Book("Death and the penguin", "Andrey Kurkov", "1996");
         ArrayList<Book> books = new ArrayList<>(Arrays.asList(book1, book2, book3));
         Library library = new Library(books);
         InputReader inputReader = new InputReader();
+        Printer printer = new Printer();
 
 
         ArrayList<Book> books2 = new ArrayList<>();
@@ -22,7 +24,7 @@ public class BibliotecaApp {
 
 
 
-        Runner runner = new Runner(library, inputReader);
+        Runner runner = new Runner(library, inputReader, printer);
         runner.Run();
 
 
