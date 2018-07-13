@@ -1,15 +1,6 @@
 package com.twu.biblioteca;
 
 class Runner {
-    private static final String END_LINE = "\n";
-    private static final String WELCOME_MESSAGE = "Welcome to Biblioteca!\n";
-    private static final String MAIN_MENU = "Main Menu:\n" +
-            "1 - List Books\n" +
-            "2 - Check Out Book\n" +
-            "3 - Return Book\n" +
-            "4 - Quit\n";
-    private static final String TAB = "\t";
-
 
     private InputReader inputReader;
     private Printer printer;
@@ -22,29 +13,18 @@ class Runner {
     }
 
 
-    void Run() {
-
-        welcomeMessage();
-        showMainMenu();
-        start();
-
-
-    }
-
-    private void start() {
+    void start() {
+        printer.welcomeMessage();
+        printer.showMainMenu();
         while (true) {
-            System.out.println("Please enter a number\n");
+            printer.selectChoiceNumber();
             int userNumber = inputReader.getUserNumber();
-            if (userNumber == -1) System.out.println("Select a valid option!\n");
+            if (userNumber == -1) printer.invalidOption();
             else if (userNumber == 1) showListOfBooks();
             else if (userNumber == 2) checkOutBook();
             else if (userNumber == 3) returnBook();
             else if (userNumber == 4) break;
-
-
-
         }
-
     }
 
     void returnBook() {
@@ -81,25 +61,10 @@ class Runner {
 
     private void showListOfBooks() {
         if (library.getListOfBooks().isEmpty()) {
-            System.out.println("There are currently no books in the library");
+            printer.emptyLibraryMessage();
         } else {
-            System.out.println("Books currently in the library:" + END_LINE);
-            System.out.println("Title" + TAB + "Author" + TAB + "Year" + END_LINE);
-            for (Book book : library.getListOfBooks()) {
-                if (book.isAvailable()) {
-                    System.out.println(book.getTitle() + TAB + book.getAuthor() + TAB + book.getYear() + TAB + END_LINE);
-                }
-            }
+            printer.listOfBooks(library);
         }
-
-    }
-
-    private void welcomeMessage() {
-        System.out.println(WELCOME_MESSAGE);
-    }
-
-    private void showMainMenu() {
-        System.out.println(MAIN_MENU);
 
     }
 }

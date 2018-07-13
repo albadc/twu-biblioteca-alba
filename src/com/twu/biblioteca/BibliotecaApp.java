@@ -25,7 +25,7 @@ public class BibliotecaApp {
 
 
         Runner runner = new Runner(library, inputReader, printer);
-        runner.Run();
+        runner.start();
 
 
     }

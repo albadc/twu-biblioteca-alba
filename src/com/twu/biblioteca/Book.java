@@ -13,9 +13,6 @@ class Book {
     private boolean isAvailable = true;
 
 
-
-
-
     String getTitle() {
         return title;
     }
@@ -23,7 +20,6 @@ class Book {
     String getAuthor() {
         return author;
     }
-
 
     String getYear() {
         return year;
@@ -36,8 +32,6 @@ class Book {
     private void setAvailable(boolean available) {
         isAvailable = available;
     }
-
-
 
     void checkOut() {
         setAvailable(false);
