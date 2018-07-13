@@ -14,6 +14,7 @@ class Library {
     private ArrayList<Book> ListOfBooks;
 
     boolean bookIsInLibrary(String title) {
+        //ListOfBooks.map().filter()
         for (Book book : ListOfBooks) {
             if (title.equals(book.getTitle())) {
                 return true;

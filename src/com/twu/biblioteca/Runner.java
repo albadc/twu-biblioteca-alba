@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import java.util.Optional;
+
 class Runner {
 
     private InputReader inputReader;
@@ -30,32 +32,48 @@ class Runner {
     void returnBook() {
         printer.initialReturnMessage();
         String bookTitle = inputReader.getBookTitle();
-        if (library.bookIsInLibrary(bookTitle)) {
+        if (returnBook(bookTitle).isPresent()) {
+            printer.successfulReturnMessage();
+        }
+        else {
+            printer.unsuccessfulReturnMessage();
+        }
+
+    }
+
+
+    Optional<Book> returnBook(String bookTitle) {
+        if (library.bookIsInLibrary(bookTitle)){
             Book book = library.getBookFromTitle(bookTitle);
             if (!book.isAvailable()) {
-                book.returnBook();
-                printer.successfulReturnMessage();
+                return book.returnBook();
             }
-            else printer.unsuccessfulReturnMessage();
-
+            else return Optional.empty();
         }
-        else printer.unsuccessfulReturnMessage();
+        return Optional.empty();
     }
+
 
     void checkOutBook() {
         printer.initialCheckOutMessage();
         String bookTitle = inputReader.getBookTitle();
+        if (checkOutBook(bookTitle).isPresent()) {
+            printer.successfulCheckOutMessage();
+        } else {
+            printer.unsuccessfulCheckOutMessage();
+        }
+    }
+
+
+    Optional<Book> checkOutBook(String bookTitle) {
         if (library.bookIsInLibrary(bookTitle)) {
             Book book = library.getBookFromTitle(bookTitle);
             if (book.isAvailable()) {
-                book.checkOut();
-                printer.successfulCheckOutMessage();
+                return book.checkOut();
             }
-            else printer.unsuccessfulCheckOutMessage();
-
+            else return Optional.empty();
         }
-        else printer.unsuccessfulCheckOutMessage();
-
+        else return Optional.empty();
     }
 
 

@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import java.util.Optional;
+
 class Book {
     Book(String title, String author, String year) {
         this.title = title;
@@ -33,11 +35,13 @@ class Book {
         isAvailable = available;
     }
 
-    void checkOut() {
+    Optional<Book> checkOut() {
         setAvailable(false);
+        return Optional.of(this);
     }
 
-    void returnBook() {
+    Optional<Book> returnBook() {
         setAvailable(true);
+        return Optional.of(this);
     }
 }

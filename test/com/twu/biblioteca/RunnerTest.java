@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
@@ -56,81 +57,40 @@ public class RunnerTest {
 
     @Test
     public void successfulCheckOut() {
-
-            String input = "We";
-            InputStream in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            runner.checkOutBook();
-
-            assertThat(outContent.toString(), containsString("Thank you! Enjoy the book"));
-
+        Optional<Book> we = runner.checkOutBook("We");
+        assertFalse(we.get().isAvailable());
     }
 
     @Test
     public void unsuccessfulCheckOutBecauseBookIsNotInLibrary() {
-        String input = "You";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        runner.checkOutBook();
-
-        assertThat(outContent.toString(), containsString("That book is not available"));
+        Optional<Book> you = runner.checkOutBook("You");
+        assertFalse(you.isPresent());
     }
 
     @Test
     public void unsuccessfulCheckOutBecauseBookIsNotAvailable() {
-        String input = "You";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
         book.checkOut();
-
-        runner.checkOutBook();
-
-
-        assertThat(outContent.toString(), containsString("That book is not available"));
+        Optional<Book> we = runner.checkOutBook("We");
+        assertFalse(we.isPresent());
     }
 
     @Test
     public void successfulReturn() {
-
-        String input = "We";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
         book.checkOut();
-
-        runner.returnBook();
-
-        assertThat(outContent.toString(), containsString("Thank you for returning the book"));
-
+        Optional<Book> we = runner.returnBook("We");
+        assertTrue(we.get().isAvailable());
     }
 
     @Test
     public void unsuccessfulReturnBecauseBookIsAlreadyInLibrary() {
-
-        String input = "We";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        runner.returnBook();
-
-        assertThat(outContent.toString(), containsString("That is not a valid book to return"));
-
+        Optional<Book> we = runner.returnBook("We");
+        assertFalse(we.isPresent());
     }
 
     @Test
     public void unsuccessfulReturnBecauseBookIsNotFromLibrary() {
-
-        String input = "You";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        runner.returnBook();
-
-        assertThat(outContent.toString(), containsString("That is not a valid book to return"));
-
+        Optional<Book> you = runner.returnBook("You");
+        assertFalse(you.isPresent());
     }
 
 
