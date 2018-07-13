@@ -17,13 +17,11 @@ import static org.junit.Assert.*;
 
 public class RunnerTest {
 
-
     Book book = new Book("We", "Yevgeni Zamiatin", "1924");
     ArrayList<Book> books = new ArrayList<>(Arrays.asList(book));
     Library library = new Library(books);
     InputReader inputReader = new InputReader();
     Printer printer = new Printer();
-
     Runner runner = new Runner(library, inputReader, printer);
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -39,11 +37,22 @@ public class RunnerTest {
         System.setOut(originalOut);
     }
 
+    @Test
+    public void showBookInListOfBooksIfItIsAvailable() {
+        runner.showListOfBooks();
 
+        assertThat(outContent.toString(), containsString("Books currently in the library:" +
+                "\n" + "Title" + "\t" + "Author" + "\t" + "Year" +
+                "\n" + "We" + "\t" + "Yevgeni Zamiatin" + "\t" + "1924"));
+    }
 
+    @Test
+    public void notShowBookInListOfBooksIfNotAvailable() {
+        book.checkOut();
+        runner.showListOfBooks();
 
-
-
+        assertThat(outContent.toString(), containsString("There are currently no books in the library"));
+    }
 
     @Test
     public void successfulCheckOut() {
@@ -57,7 +66,6 @@ public class RunnerTest {
             assertThat(outContent.toString(), containsString("Thank you! Enjoy the book"));
 
     }
-
 
     @Test
     public void unsuccessfulCheckOutBecauseBookIsNotInLibrary() {

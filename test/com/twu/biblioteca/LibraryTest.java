@@ -15,6 +15,7 @@ public class LibraryTest {
     ArrayList<Book> books = new ArrayList<>(Arrays.asList(book1, book2));
     Library library = new Library(books);
 
+
     @Test
     public void returnsBookIsInLibrary() {
 
@@ -31,5 +32,17 @@ public class LibraryTest {
     public void libraryGivesBookFromTitle() {
         String title = "We";
         assertEquals(book1, library.getBookFromTitle(title));
+    }
+
+    @Test
+    public void thereAreAvailableBooks() {
+        assertEquals(false, library.noAvailableBooks());
+    }
+
+    @Test
+    public void thereAreNoAvailableBooks() {
+        book1.checkOut();
+        book2.checkOut();
+        assertEquals(true, library.noAvailableBooks());
     }
 }

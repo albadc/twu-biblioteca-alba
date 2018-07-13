@@ -59,8 +59,8 @@ class Runner {
     }
 
 
-    private void showListOfBooks() {
-        if (library.getListOfBooks().isEmpty()) {
+    void showListOfBooks() {
+        if (library.getListOfBooks().isEmpty() || library.noAvailableBooks()) {
             printer.emptyLibraryMessage();
         } else {
             printer.listOfBooks(library);
