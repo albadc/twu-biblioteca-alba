@@ -4,6 +4,7 @@ import java.util.Optional;
 
 class Runner {
 
+    private final Librarian librarian = new Librarian(this);
     private InputReader inputReader;
     private Printer printer;
     private Library library;
@@ -23,22 +24,10 @@ class Runner {
             int userNumber = inputReader.getUserNumber();
             if (userNumber == -1) printer.invalidOption();
             else if (userNumber == 1) showListOfBooks();
-            else if (userNumber == 2) checkOutBook();
-            else if (userNumber == 3) returnBook();
+            else if (userNumber == 2) librarian.checkOutBook();
+            else if (userNumber == 3) librarian.returnBook();
             else if (userNumber == 4) break;
         }
-    }
-
-    void returnBook() {
-        printer.initialReturnMessage();
-        String bookTitle = inputReader.getBookTitle();
-        if (returnBook(bookTitle).isPresent()) {
-            printer.successfulReturnMessage();
-        }
-        else {
-            printer.unsuccessfulReturnMessage();
-        }
-
     }
 
 
@@ -51,17 +40,6 @@ class Runner {
             else return Optional.empty();
         }
         return Optional.empty();
-    }
-
-
-    void checkOutBook() {
-        printer.initialCheckOutMessage();
-        String bookTitle = inputReader.getBookTitle();
-        if (checkOutBook(bookTitle).isPresent()) {
-            printer.successfulCheckOutMessage();
-        } else {
-            printer.unsuccessfulCheckOutMessage();
-        }
     }
 
 
@@ -84,5 +62,13 @@ class Runner {
             printer.listOfBooks(library);
         }
 
+    }
+
+    Printer getPrinter() {
+        return printer;
+    }
+
+    InputReader getInputReader() {
+        return inputReader;
     }
 }
