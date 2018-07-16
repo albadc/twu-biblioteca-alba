@@ -12,7 +12,9 @@ class Printer {
                 "1 - List Books\n" +
                 "2 - Check Out Book\n" +
                 "3 - Return Book\n" +
-                "4 - Quit\n");
+                "4 - List Movies\n" +
+                "5 - Check Out Movie\n" +
+                "6 - Quit\n");
     }
 
     void selectChoiceNumber() {
@@ -75,5 +77,17 @@ class Printer {
 
     void emptyMoviesMessage() {
         System.out.println("There are currently no movies in the library");
+    }
+
+    void initialCheckOutMessageForMovie() {
+        System.out.println("Please enter the name of the movie you want to check out");
+    }
+
+    void successfulCheckOutMessageForMovie() {
+        System.out.println("Thank you! Enjoy the movie");
+    }
+
+    void unsuccessfulCheckOutMessageForMovie() {
+        System.out.println("That movie is not available");
     }
 }

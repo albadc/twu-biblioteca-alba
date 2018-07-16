@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class LibraryTest {
 
@@ -16,6 +16,7 @@ public class LibraryTest {
     Book book3 = new Book("Death and the penguin", "Andrey Kurkov", "1996");
     ArrayList<Book> books = new ArrayList<>(Arrays.asList(book1, book2));
     Movie movie = new Movie("X-Men: First Class", "Matthew Vaughn", "2011", 7.8);
+    Movie movie2 = new Movie("X-Men: Days Of Future Past", "Bryan Singer", "2014", 8);
     ArrayList<Movie> movies = new ArrayList<>((Collections.singletonList(movie)));
     Library library = new Library(books, movies);
 
@@ -23,13 +24,13 @@ public class LibraryTest {
     @Test
     public void returnsBookIsInLibrary() {
 
-        assertEquals(true, library.bookIsInLibrary(book1.getTitle()));
+        assertTrue(library.bookIsInLibrary(book1.getTitle()));
     }
 
     @Test
     public void returnsBookIsNotInLibrary() {
 
-        assertEquals(false, library.bookIsInLibrary(book3.getTitle()));
+        assertFalse(library.bookIsInLibrary(book3.getTitle()));
     }
 
     @Test
@@ -40,23 +41,41 @@ public class LibraryTest {
 
     @Test
     public void thereAreAvailableBooks() {
-        assertEquals(false, library.hasNoAvailableBooks());
+        assertFalse(library.hasNoAvailableBooks());
     }
 
     @Test
     public void thereAreNoAvailableBooks() {
         book1.checkOut();
         book2.checkOut();
-        assertEquals(true, library.hasNoAvailableBooks());
+        assertTrue(library.hasNoAvailableBooks());
     }
 
     @Test
     public void thereAreAvailableMovies() {
-        assertEquals(false, library.hasNoAvailableMovies());
+
+        assertFalse(library.hasNoAvailableMovies());
     }
 
     @Test
     public void thereAreNoAvailableMovies() {
-        assertEquals(true, library.hasNoAvailableMovies());
+        movie.checkOut();
+        assertTrue(library.hasNoAvailableMovies());
+    }
+
+    @Test
+    public void returnsMovieIsInLibrary() {
+        assertTrue(library.movieIsInLibrary(movie.getName()));
+    }
+
+    @Test
+    public void returnsMovieIsNotInLibrary() {
+        assertFalse(library.movieIsInLibrary(movie2.getName()));
+
+    }
+
+    @Test
+    public void libraryGivesMovieFromName() {
+        assertEquals(Optional.of(movie), library.getMovieFromName("X-Men: First Class"));
     }
 }

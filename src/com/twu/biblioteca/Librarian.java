@@ -27,4 +27,14 @@ public class Librarian {
             runner.getPrinter().unsuccessfulCheckOutMessage();
         }
     }
+
+    public void checkOutMovie() {
+        runner.getPrinter().initialCheckOutMessageForMovie();
+        String movieTitle = runner.getInputReader().getBookTitle();
+        if (runner.checkOutMovie(movieTitle).isPresent()) {
+            runner.getPrinter().successfulCheckOutMessageForMovie();
+        } else {
+            runner.getPrinter().unsuccessfulCheckOutMessageForMovie();
+        }
+    }
 }

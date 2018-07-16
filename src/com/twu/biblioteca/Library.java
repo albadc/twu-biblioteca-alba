@@ -37,4 +37,12 @@ class Library {
         return listOfMovies.stream().noneMatch(Movie::isAvailable);
 
     }
+
+    public boolean movieIsInLibrary(String movieTitle) {
+        return listOfMovies.stream().anyMatch(movie -> movieTitle.equals(movie.getName()));
+    }
+
+    public Optional<Movie> getMovieFromName(String movieTitle) {
+        return listOfMovies.stream().filter(movie -> movieTitle.equals(movie.getName())).findFirst();
+    }
 }

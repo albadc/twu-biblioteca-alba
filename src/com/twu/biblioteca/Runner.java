@@ -26,7 +26,9 @@ class Runner {
             else if (userNumber == 1) showListOfBooks();
             else if (userNumber == 2) librarian.checkOutBook();
             else if (userNumber == 3) librarian.returnBook();
-            else if (userNumber == 4) break;
+            else if (userNumber == 4) showListOfMovies();
+            else if (userNumber == 5) librarian.checkOutMovie();
+            else if (userNumber == 6) break;
         }
     }
 
@@ -79,5 +81,15 @@ class Runner {
             printer.listOfMovies(library);
         }
 
+    }
+
+    public Optional<Movie> checkOutMovie(String movieTitle) {
+        if (library.movieIsInLibrary(movieTitle)) {
+            Movie movie = library.getMovieFromName(movieTitle).get();
+            if (movie.isAvailable()) {
+                return movie.checkOut();
+            } else return Optional.empty();
+        }
+        return Optional.empty();
     }
 }
