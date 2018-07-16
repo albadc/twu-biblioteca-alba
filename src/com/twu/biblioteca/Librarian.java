@@ -28,13 +28,28 @@ public class Librarian {
         }
     }
 
-    public void checkOutMovie() {
+    void checkOutMovie() {
         runner.getPrinter().initialCheckOutMessageForMovie();
         String movieTitle = runner.getInputReader().getTitle();
         if (runner.checkOutMovie(movieTitle).isPresent()) {
             runner.getPrinter().successfulCheckOutMessageForMovie();
         } else {
             runner.getPrinter().unsuccessfulCheckOutMessageForMovie();
+        }
+    }
+
+
+    boolean ableToLogin() {
+        runner.getPrinter().askLoginInNumber();
+        String loginNumber = runner.getInputReader().getLoginNumber();
+        if (runner.getUsers().isUserInUsersDB(loginNumber)) {
+            User user = runner.getUsers().getUserFromLoginNumber(loginNumber).get();
+            runner.getPrinter().askPassword();
+            String password = runner.getInputReader().getPassword();
+            return user.logIn(loginNumber, password);
+        } else {
+            runner.getPrinter().wrongLogIn();
+            return false;
         }
     }
 }

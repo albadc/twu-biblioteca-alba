@@ -19,15 +19,16 @@ public class BibliotecaApp {
         Library library = new Library(books, movies);
         InputReader inputReader = new InputReader();
         Printer printer = new Printer();
+        User user = new User("123-4567", "1234");
+        ArrayList<User> validUsers = new ArrayList<>(Collections.singletonList(user));
+        Users users = new Users(validUsers);
 
 
 //        ArrayList<Book> books2 = new ArrayList<>();
 //        Library library2 = new Library(books2);
 
 
-
-
-        Runner runner = new Runner(library, inputReader, printer);
+        Runner runner = new Runner(library, inputReader, printer, users);
         runner.start();
 
 

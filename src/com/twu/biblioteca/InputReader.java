@@ -25,4 +25,16 @@ class InputReader {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
+
+
+    String getLoginNumber() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+
+    }
+
+    String getPassword() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
 }

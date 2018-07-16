@@ -90,4 +90,24 @@ class Printer {
     void unsuccessfulCheckOutMessageForMovie() {
         System.out.println("That movie is not available");
     }
+
+    void askLoginInNumber() {
+        System.out.println("Please input your library number");
+    }
+
+    void wrongLogIn() {
+        System.out.println("Please input a valid log in number of format xxx-xxxx");
+    }
+
+    void correctLogIn() {
+        System.out.println("Successfully logged in");
+    }
+
+    void unableToLogInMessage() {
+        System.out.println("Unsuccessful log in. Please try again");
+    }
+
+    public void askPassword() {
+        System.out.println("Please input your password");
+    }
 }

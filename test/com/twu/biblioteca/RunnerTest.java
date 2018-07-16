@@ -24,7 +24,10 @@ public class RunnerTest {
     Library library = new Library(books, movies);
     InputReader inputReader = new InputReader();
     Printer printer = new Printer();
-    Runner runner = new Runner(library, inputReader, printer);
+    User user = new User("123-456", "1234");
+    ArrayList<User> validUsers = new ArrayList<>(Collections.singletonList(user));
+    Users users = new Users(validUsers);
+    Runner runner = new Runner(library, inputReader, printer, users);
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
@@ -110,4 +113,6 @@ public class RunnerTest {
         runner.showListOfMovies();
         assertThat(outContent.toString(), containsString("There are currently no movies in the library"));
     }
+
+
 }

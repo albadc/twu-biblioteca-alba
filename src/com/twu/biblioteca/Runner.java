@@ -9,26 +9,38 @@ class Runner {
     private Printer printer;
     private Library library;
 
-    Runner(Library library, InputReader inputReader, Printer printer) {
+    private Users users;
+
+    Runner(Library library, InputReader inputReader, Printer printer, Users users) {
         this.library = library;
         this.inputReader = inputReader;
         this.printer = printer;
+        this.users = users;
     }
 
+    public Users getUsers() {
+        return users;
+    }
 
     void start() {
         printer.welcomeMessage();
-        printer.showMainMenu();
-        while (true) {
-            printer.selectChoiceNumber();
-            int userNumber = inputReader.getUserNumber();
-            if (userNumber == -1) printer.invalidOption();
-            else if (userNumber == 1) showListOfBooks();
-            else if (userNumber == 2) librarian.checkOutBook();
-            else if (userNumber == 3) librarian.returnBook();
-            else if (userNumber == 4) showListOfMovies();
-            else if (userNumber == 5) librarian.checkOutMovie();
-            else if (userNumber == 6) break;
+        if (librarian.ableToLogin()) {
+            printer.correctLogIn();
+            printer.showMainMenu();
+            while (true) {
+                printer.selectChoiceNumber();
+                int userNumber = inputReader.getUserNumber();
+                if (userNumber == -1) printer.invalidOption();
+                else if (userNumber == 1) showListOfBooks();
+                else if (userNumber == 2) librarian.checkOutBook();
+                else if (userNumber == 3) librarian.returnBook();
+                else if (userNumber == 4) showListOfMovies();
+                else if (userNumber == 5) librarian.checkOutMovie();
+                else if (userNumber == 6) break;
+            }
+        } else {
+            printer.unableToLogInMessage();
+            start();
         }
     }
 
@@ -46,6 +58,7 @@ class Runner {
 
 
     Optional<Book> checkOutBook(String bookTitle) {
+
         if (library.bookIsInLibrary(bookTitle)) {
             Book book = library.getBookFromTitle(bookTitle).get();
             if (book.isAvailable()) {
@@ -83,7 +96,7 @@ class Runner {
 
     }
 
-    public Optional<Movie> checkOutMovie(String movieTitle) {
+    Optional<Movie> checkOutMovie(String movieTitle) {
         if (library.movieIsInLibrary(movieTitle)) {
             Movie movie = library.getMovieFromName(movieTitle).get();
             if (movie.isAvailable()) {
