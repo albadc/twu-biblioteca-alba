@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -31,18 +32,18 @@ public class LibraryTest {
     @Test
     public void libraryGivesBookFromTitle() {
         String title = "We";
-        assertEquals(book1, library.getBookFromTitle(title));
+        assertEquals(Optional.of(book1), library.getBookFromTitle(title));
     }
 
     @Test
     public void thereAreAvailableBooks() {
-        assertEquals(false, library.noAvailableBooks());
+        assertEquals(false, library.hasNoAvailableBooks());
     }
 
     @Test
     public void thereAreNoAvailableBooks() {
         book1.checkOut();
         book2.checkOut();
-        assertEquals(true, library.noAvailableBooks());
+        assertEquals(true, library.hasNoAvailableBooks());
     }
 }

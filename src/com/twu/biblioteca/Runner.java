@@ -33,7 +33,7 @@ class Runner {
 
     Optional<Book> returnBook(String bookTitle) {
         if (library.bookIsInLibrary(bookTitle)){
-            Book book = library.getBookFromTitle(bookTitle);
+            Book book = library.getBookFromTitle(bookTitle).get();
             if (!book.isAvailable()) {
                 return book.returnBook();
             }
@@ -45,7 +45,7 @@ class Runner {
 
     Optional<Book> checkOutBook(String bookTitle) {
         if (library.bookIsInLibrary(bookTitle)) {
-            Book book = library.getBookFromTitle(bookTitle);
+            Book book = library.getBookFromTitle(bookTitle).get();
             if (book.isAvailable()) {
                 return book.checkOut();
             }
@@ -56,7 +56,7 @@ class Runner {
 
 
     void showListOfBooks() {
-        if (library.getListOfBooks().isEmpty() || library.noAvailableBooks()) {
+        if (library.getListOfBooks().isEmpty() || library.hasNoAvailableBooks()) {
             printer.emptyLibraryMessage();
         } else {
             printer.listOfBooks(library);

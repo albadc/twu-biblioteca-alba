@@ -1,6 +1,8 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
 class Library {
     ArrayList<Book> getListOfBooks() {
@@ -14,25 +16,14 @@ class Library {
     private ArrayList<Book> ListOfBooks;
 
     boolean bookIsInLibrary(String title) {
-        //ListOfBooks.map().filter()
-        for (Book book : ListOfBooks) {
-            if (title.equals(book.getTitle())) {
-                return true;
-            }
-        }
-        return false;
+        return ListOfBooks.stream().anyMatch(book -> title.equals(book.getTitle()));
     }
 
-    Book getBookFromTitle(String title) {
-        for (Book book : ListOfBooks)
-            if (title.equals(book.getTitle())) return book;
-        return null;
+    Optional<Book> getBookFromTitle(String title) {
+        return ListOfBooks.stream().filter(book -> title.equals(book.getTitle())).findFirst();
     }
 
-    boolean noAvailableBooks() {
-        for (Book book : ListOfBooks) {
-            if (book.isAvailable()) return false;
-        }
-        return true;
+    boolean hasNoAvailableBooks() {
+        return ListOfBooks.stream().noneMatch(Book::isAvailable);
     }
 }
