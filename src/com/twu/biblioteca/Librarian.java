@@ -43,10 +43,10 @@ public class Librarian {
         runner.getPrinter().askLoginInNumber();
         String loginNumber = runner.getInputReader().getLoginNumber();
         if (runner.getUsers().isUserInUsersDB(loginNumber)) {
-            User user = runner.getUsers().getUserFromLoginNumber(loginNumber).get();
+            runner.setUser(runner.getUsers().getUserFromLoginNumber(loginNumber).get());
             runner.getPrinter().askPassword();
             String password = runner.getInputReader().getPassword();
-            return user.logIn(loginNumber, password);
+            return runner.getUser().logIn(loginNumber, password);
         } else {
             runner.getPrinter().wrongLogIn();
             return false;

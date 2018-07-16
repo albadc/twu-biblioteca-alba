@@ -18,7 +18,7 @@ class InputReader {
     }
 
     private boolean isOutOfBounds(int userNumber) {
-        return (userNumber < 1 || userNumber > 6);
+        return (userNumber < 1 || userNumber > 7);
     }
 
     String getTitle() {

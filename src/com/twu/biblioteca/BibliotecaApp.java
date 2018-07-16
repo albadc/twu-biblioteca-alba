@@ -20,6 +20,9 @@ public class BibliotecaApp {
         InputReader inputReader = new InputReader();
         Printer printer = new Printer();
         User user = new User("123-4567", "1234");
+        user.setEmail("happyPenguin23@gmail.com");
+        user.setName("Misha");
+        user.setPhoneNumber("666777888");
         ArrayList<User> validUsers = new ArrayList<>(Collections.singletonList(user));
         Users users = new Users(validUsers);
 

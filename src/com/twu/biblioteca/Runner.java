@@ -11,6 +11,16 @@ class Runner {
 
     private Users users;
 
+    private User user;
+
+    User getUser() {
+        return user;
+    }
+
+    void setUser(User user) {
+        this.user = user;
+    }
+
     Runner(Library library, InputReader inputReader, Printer printer, Users users) {
         this.library = library;
         this.inputReader = inputReader;
@@ -18,7 +28,7 @@ class Runner {
         this.users = users;
     }
 
-    public Users getUsers() {
+    Users getUsers() {
         return users;
     }
 
@@ -36,7 +46,8 @@ class Runner {
                 else if (userNumber == 3) librarian.returnBook();
                 else if (userNumber == 4) showListOfMovies();
                 else if (userNumber == 5) librarian.checkOutMovie();
-                else if (userNumber == 6) break;
+                else if (userNumber == 6) printer.showUserInfo(user);
+                else if (userNumber == 7) break;
             }
         } else {
             printer.unableToLogInMessage();

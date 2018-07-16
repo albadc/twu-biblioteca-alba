@@ -14,7 +14,8 @@ class Printer {
                 "3 - Return Book\n" +
                 "4 - List Movies\n" +
                 "5 - Check Out Movie\n" +
-                "6 - Quit\n");
+                "6 - Check user information\n" +
+                "7 - Quit\n");
     }
 
     void selectChoiceNumber() {
@@ -107,7 +108,11 @@ class Printer {
         System.out.println("Unsuccessful log in. Please try again");
     }
 
-    public void askPassword() {
+    void askPassword() {
         System.out.println("Please input your password");
+    }
+
+    void showUserInfo(User user) {
+        System.out.println(user.getName() + TAB + user.getEmail() + TAB + user.getPhoneNumber());
     }
 }
