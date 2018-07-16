@@ -71,4 +71,13 @@ class Runner {
     InputReader getInputReader() {
         return inputReader;
     }
+
+    void showListOfMovies() {
+        if (library.getListOfMovies().isEmpty() || library.hasNoAvailableMovies()) {
+            printer.emptyMoviesMessage();
+        } else {
+            printer.listOfMovies(library);
+        }
+
+    }
 }

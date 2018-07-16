@@ -4,12 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -20,7 +19,9 @@ public class RunnerTest {
 
     Book book = new Book("We", "Yevgeni Zamiatin", "1924");
     ArrayList<Book> books = new ArrayList<>(Arrays.asList(book));
-    Library library = new Library(books);
+    Movie movie = new Movie("X-Men: First Class", "Matthew Vaughn", "2011", 7.8);
+    ArrayList<Movie> movies = new ArrayList<>((Collections.singletonList(movie)));
+    Library library = new Library(books, movies);
     InputReader inputReader = new InputReader();
     Printer printer = new Printer();
     Runner runner = new Runner(library, inputReader, printer);
@@ -93,5 +94,20 @@ public class RunnerTest {
         assertFalse(you.isPresent());
     }
 
+    @Test
+    public void showMovieInListOfMoviesIfItIsAvailable() {
+        runner.showListOfMovies();
 
+        assertThat(outContent.toString(), containsString("Movies currently in the library:" +
+                "\n" + "Name" + "\t" + "Director" + "\t" + "Year" + "\t" + "Rating"
+                + "\n" + "X-Men: First Class" + "\t" + "Matthew Vaughn" + "\t" + "2011" + "\t" + "7.8"));
+
+    }
+
+    @Test
+    public void notShowMovieInListOfMoviesIfItIsNotAvailable() {
+        movie.checkOut();
+        runner.showListOfMovies();
+        assertThat(outContent.toString(), containsString("There are currently no movies in the library"));
+    }
 }

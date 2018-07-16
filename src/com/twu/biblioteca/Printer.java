@@ -62,4 +62,18 @@ class Printer {
     void successfulReturnMessage() {
         System.out.println("Thank you for returning the book");
     }
+
+    void listOfMovies(Library library) {
+        System.out.println("Movies currently in the library:");
+        System.out.println("Name" + TAB + "Director" + TAB + "Year" + TAB + "Rating");
+        for (Movie movie : library.getListOfMovies()) {
+            if (movie.isAvailable()) {
+                System.out.println(movie.getName() + TAB + movie.getDirector() + TAB + movie.getYear() + TAB + movie.getRating());
+            }
+        }
+    }
+
+    void emptyMoviesMessage() {
+        System.out.println("There are currently no movies in the library");
+    }
 }
