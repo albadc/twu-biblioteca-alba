@@ -9,7 +9,7 @@ public class Librarian {
 
     void returnBook() {
         runner.getPrinter().initialReturnMessage();
-        String bookTitle = runner.getInputReader().getBookTitle();
+        String bookTitle = runner.getInputReader().getTitle();
         if (runner.returnBook(bookTitle).isPresent()) {
             runner.getPrinter().successfulReturnMessage();
         } else {
@@ -20,7 +20,7 @@ public class Librarian {
 
     void checkOutBook() {
         runner.getPrinter().initialCheckOutMessage();
-        String bookTitle = runner.getInputReader().getBookTitle();
+        String bookTitle = runner.getInputReader().getTitle();
         if (runner.checkOutBook(bookTitle).isPresent()) {
             runner.getPrinter().successfulCheckOutMessage();
         } else {
@@ -30,7 +30,7 @@ public class Librarian {
 
     public void checkOutMovie() {
         runner.getPrinter().initialCheckOutMessageForMovie();
-        String movieTitle = runner.getInputReader().getBookTitle();
+        String movieTitle = runner.getInputReader().getTitle();
         if (runner.checkOutMovie(movieTitle).isPresent()) {
             runner.getPrinter().successfulCheckOutMessageForMovie();
         } else {

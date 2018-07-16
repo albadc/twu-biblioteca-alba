@@ -18,10 +18,10 @@ class InputReader {
     }
 
     private boolean isOutOfBounds(int userNumber) {
-        return (userNumber < 1 || userNumber > 4);
+        return (userNumber < 1 || userNumber > 6);
     }
 
-    String getBookTitle() {
+    String getTitle() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
