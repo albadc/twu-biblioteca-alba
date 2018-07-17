@@ -1,55 +1,42 @@
 package com.twu.biblioteca;
 
+import java.util.Optional;
+
 public class Librarian {
-    private final Runner runner;
+    private Library library;
 
-    public Librarian(Runner runner) {
-        this.runner = runner;
-    }
-
-    void returnBook() {
-        runner.getPrinter().initialReturnMessage();
-        String bookTitle = runner.getInputReader().getTitle();
-        if (runner.returnBook(bookTitle).isPresent()) {
-            runner.getPrinter().successfulReturnMessage();
-        } else {
-            runner.getPrinter().unsuccessfulReturnMessage();
-        }
-
-    }
-
-    void checkOutBook() {
-        runner.getPrinter().initialCheckOutMessage();
-        String bookTitle = runner.getInputReader().getTitle();
-        if (runner.checkOutBook(bookTitle).isPresent()) {
-            runner.getPrinter().successfulCheckOutMessage();
-        } else {
-            runner.getPrinter().unsuccessfulCheckOutMessage();
-        }
-    }
-
-    void checkOutMovie() {
-        runner.getPrinter().initialCheckOutMessageForMovie();
-        String movieTitle = runner.getInputReader().getTitle();
-        if (runner.checkOutMovie(movieTitle).isPresent()) {
-            runner.getPrinter().successfulCheckOutMessageForMovie();
-        } else {
-            runner.getPrinter().unsuccessfulCheckOutMessageForMovie();
-        }
+    public Librarian(Library library) {
+        this.library = library;
     }
 
 
-    boolean ableToLogin() {
-        runner.getPrinter().askLoginInNumber();
-        String loginNumber = runner.getInputReader().getLoginNumber();
-        if (runner.getUsers().isUserInUsersDB(loginNumber)) {
-            runner.setUser(runner.getUsers().getUserFromLoginNumber(loginNumber).get());
-            runner.getPrinter().askPassword();
-            String password = runner.getInputReader().getPassword();
-            return runner.getUser().logIn(loginNumber, password);
-        } else {
-            runner.getPrinter().wrongLogIn();
-            return false;
+    Optional<Book> checkOutBook(String bookTitle) {
+
+        if (library.bookIsInLibrary(bookTitle)) {
+            Book book = library.getBookFromTitle(bookTitle).get();
+            if (book.isAvailable()) {
+                return book.checkOut();
+            } else return Optional.empty();
+        } else return Optional.empty();
+    }
+
+    Optional<Book> returnBook(String bookTitle) {
+        if (library.bookIsInLibrary(bookTitle)) {
+            Book book = library.getBookFromTitle(bookTitle).get();
+            if (!book.isAvailable()) {
+                return book.returnBook();
+            } else return Optional.empty();
         }
+        return Optional.empty();
+    }
+
+    Optional<Movie> checkOutMovie(String movieTitle) {
+        if (library.movieIsInLibrary(movieTitle)) {
+            Movie movie = library.getMovieFromName(movieTitle).get();
+            if (movie.isAvailable()) {
+                return movie.checkOut();
+            } else return Optional.empty();
+        }
+        return Optional.empty();
     }
 }

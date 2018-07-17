@@ -1,21 +1,14 @@
 package com.twu.biblioteca;
 
-import java.util.Optional;
-
 class Runner {
 
-    private final Librarian librarian = new Librarian(this);
+    private final Librarian librarian = new Librarian(this.library);
     private InputReader inputReader;
     private Printer printer;
     private Library library;
-
     private Users users;
-
     private User user;
 
-    User getUser() {
-        return user;
-    }
 
     void setUser(User user) {
         this.user = user;
@@ -28,13 +21,10 @@ class Runner {
         this.users = users;
     }
 
-    Users getUsers() {
-        return users;
-    }
 
     void start() {
         printer.welcomeMessage();
-        if (librarian.ableToLogin()) {
+        if (ableToLogin()) {
             printer.correctLogIn();
             printer.showMainMenu();
             while (true) {
@@ -42,10 +32,10 @@ class Runner {
                 int userNumber = inputReader.getUserNumber();
                 if (userNumber == -1) printer.invalidOption();
                 else if (userNumber == 1) showListOfBooks();
-                else if (userNumber == 2) librarian.checkOutBook();
-                else if (userNumber == 3) librarian.returnBook();
+                else if (userNumber == 2) checkOutBook();
+                else if (userNumber == 3) returnBook();
                 else if (userNumber == 4) showListOfMovies();
-                else if (userNumber == 5) librarian.checkOutMovie();
+                else if (userNumber == 5) checkOutMovie();
                 else if (userNumber == 6) printer.showUserInfo(user);
                 else if (userNumber == 7) break;
             }
@@ -53,31 +43,6 @@ class Runner {
             printer.unableToLogInMessage();
             start();
         }
-    }
-
-
-    Optional<Book> returnBook(String bookTitle) {
-        if (library.bookIsInLibrary(bookTitle)){
-            Book book = library.getBookFromTitle(bookTitle).get();
-            if (!book.isAvailable()) {
-                return book.returnBook();
-            }
-            else return Optional.empty();
-        }
-        return Optional.empty();
-    }
-
-
-    Optional<Book> checkOutBook(String bookTitle) {
-
-        if (library.bookIsInLibrary(bookTitle)) {
-            Book book = library.getBookFromTitle(bookTitle).get();
-            if (book.isAvailable()) {
-                return book.checkOut();
-            }
-            else return Optional.empty();
-        }
-        else return Optional.empty();
     }
 
 
@@ -90,13 +55,6 @@ class Runner {
 
     }
 
-    Printer getPrinter() {
-        return printer;
-    }
-
-    InputReader getInputReader() {
-        return inputReader;
-    }
 
     void showListOfMovies() {
         if (library.getListOfMovies().isEmpty() || library.hasNoAvailableMovies()) {
@@ -107,13 +65,48 @@ class Runner {
 
     }
 
-    Optional<Movie> checkOutMovie(String movieTitle) {
-        if (library.movieIsInLibrary(movieTitle)) {
-            Movie movie = library.getMovieFromName(movieTitle).get();
-            if (movie.isAvailable()) {
-                return movie.checkOut();
-            } else return Optional.empty();
+    void checkOutBook() {
+        printer.initialCheckOutMessage();
+        String bookTitle = inputReader.getTitle();
+        if (librarian.checkOutBook(bookTitle).isPresent()) {
+            printer.successfulCheckOutMessage();
+        } else {
+            printer.unsuccessfulCheckOutMessage();
         }
-        return Optional.empty();
+    }
+
+    void returnBook() {
+        printer.initialReturnMessage();
+        String bookTitle = inputReader.getTitle();
+        if (librarian.returnBook(bookTitle).isPresent()) {
+            printer.successfulReturnMessage();
+        } else {
+            printer.unsuccessfulReturnMessage();
+        }
+
+    }
+
+    boolean ableToLogin() {
+        printer.askLoginInNumber();
+        String loginNumber = inputReader.getLoginNumber();
+        if (users.isUserInUsersDB(loginNumber)) {
+            setUser(users.getUserFromLoginNumber(loginNumber).get());
+            printer.askPassword();
+            String password = inputReader.getPassword();
+            return user.logIn(loginNumber, password);
+        } else {
+            printer.wrongLogIn();
+            return false;
+        }
+    }
+
+    void checkOutMovie() {
+        printer.initialCheckOutMessageForMovie();
+        String movieTitle = inputReader.getTitle();
+        if (librarian.checkOutMovie(movieTitle).isPresent()) {
+            printer.successfulCheckOutMessageForMovie();
+        } else {
+            printer.unsuccessfulCheckOutMessageForMovie();
+        }
     }
 }

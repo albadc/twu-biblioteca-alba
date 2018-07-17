@@ -9,10 +9,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 
 public class RunnerTest {
@@ -59,43 +58,6 @@ public class RunnerTest {
         assertThat(outContent.toString(), containsString("There are currently no books in the library"));
     }
 
-    @Test
-    public void successfulCheckOut() {
-        Optional<Book> we = runner.checkOutBook("We");
-        assertFalse(we.get().isAvailable());
-    }
-
-    @Test
-    public void unsuccessfulCheckOutBecauseBookIsNotInLibrary() {
-        Optional<Book> you = runner.checkOutBook("You");
-        assertFalse(you.isPresent());
-    }
-
-    @Test
-    public void unsuccessfulCheckOutBecauseBookIsNotAvailable() {
-        book.checkOut();
-        Optional<Book> we = runner.checkOutBook("We");
-        assertFalse(we.isPresent());
-    }
-
-    @Test
-    public void successfulReturn() {
-        book.checkOut();
-        Optional<Book> we = runner.returnBook("We");
-        assertTrue(we.get().isAvailable());
-    }
-
-    @Test
-    public void unsuccessfulReturnBecauseBookIsAlreadyInLibrary() {
-        Optional<Book> we = runner.returnBook("We");
-        assertFalse(we.isPresent());
-    }
-
-    @Test
-    public void unsuccessfulReturnBecauseBookIsNotFromLibrary() {
-        Optional<Book> you = runner.returnBook("You");
-        assertFalse(you.isPresent());
-    }
 
     @Test
     public void showMovieInListOfMoviesIfItIsAvailable() {
