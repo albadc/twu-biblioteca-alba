@@ -2,7 +2,7 @@ package com.twu.biblioteca;
 
 class Runner {
 
-    private final Librarian librarian = new Librarian(this.library);
+    private final Librarian librarian;
     private InputReader inputReader;
     private Printer printer;
     private Library library;
@@ -19,6 +19,7 @@ class Runner {
         this.inputReader = inputReader;
         this.printer = printer;
         this.users = users;
+        this.librarian = new Librarian(this.library);
     }
 
 

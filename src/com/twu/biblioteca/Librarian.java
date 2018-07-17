@@ -11,7 +11,6 @@ public class Librarian {
 
 
     Optional<Book> checkOutBook(String bookTitle) {
-
         if (library.bookIsInLibrary(bookTitle)) {
             Book book = library.getBookFromTitle(bookTitle).get();
             if (book.isAvailable()) {
