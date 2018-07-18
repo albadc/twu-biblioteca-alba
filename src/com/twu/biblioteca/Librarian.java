@@ -4,9 +4,13 @@ import java.util.Optional;
 
 public class Librarian {
     private Library library;
+    private UserBookLog userBookLog;
+    private User user;
 
-    public Librarian(Library library) {
+    public Librarian(Library library, UserBookLog userBookLog, User user) {
         this.library = library;
+        this.userBookLog = userBookLog;
+        this.user = user;
     }
 
 
@@ -14,6 +18,7 @@ public class Librarian {
         if (library.bookIsInLibrary(bookTitle)) {
             Book book = library.getBookFromTitle(bookTitle).get();
             if (book.isAvailable()) {
+                userBookLog.addBookToLog(user, book);
                 return book.checkOut();
             } else return Optional.empty();
         } else return Optional.empty();
@@ -22,7 +27,8 @@ public class Librarian {
     Optional<Book> returnBook(String bookTitle) {
         if (library.bookIsInLibrary(bookTitle)) {
             Book book = library.getBookFromTitle(bookTitle).get();
-            if (!book.isAvailable()) {
+            if (userBookLog.hasUserCheckedOutBook(user, book)) {
+                userBookLog.removeBookFromLog(user, book);
                 return book.returnBook();
             } else return Optional.empty();
         }

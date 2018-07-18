@@ -13,7 +13,9 @@ public class LibrarianTest {
     Library library = mock(Library.class);
     Book book = new Book("We", "Yevgeni Zamiatin", "1924");
     Movie movie = new Movie("X-Men: First Class", "Matthew Vaughn", "2011", 7.8);
-    Librarian librarian = new Librarian(library);
+    UserBookLog userBookLog = mock(UserBookLog.class);
+    User user = new User("123-4567", "1234");
+    Librarian librarian = new Librarian(library, userBookLog, user);
 
     @Test
     public void shouldSetAvailableToFalseWhenCheckOutBookSuccessfully() {
@@ -49,6 +51,8 @@ public class LibrarianTest {
     public void shouldSetAvailableToTrueWhenReturningCheckedOutBook() {
         when(library.bookIsInLibrary("We")).thenReturn(true);
         when(library.getBookFromTitle("We")).thenReturn(Optional.of(book));
+        when(userBookLog.hasUserCheckedOutBook(user, book)).thenReturn(true);
+
         book.checkOut();
 
         Optional<Book> expectedBook = librarian.returnBook("We");
@@ -60,6 +64,7 @@ public class LibrarianTest {
     public void shouldFailReturnWhenBookHasNotBeenCheckedOut() {
         when(library.bookIsInLibrary("We")).thenReturn(true);
         when(library.getBookFromTitle("We")).thenReturn(Optional.of(book));
+        when(userBookLog.hasUserCheckedOutBook(user, book)).thenReturn(false);
 
         Optional<Book> we = librarian.returnBook("We");
 
@@ -103,5 +108,35 @@ public class LibrarianTest {
         Optional<Movie> expectedMovie = librarian.checkOutMovie("X-Men: First Class");
 
         assertFalse(expectedMovie.isPresent());
+    }
+
+    @Test
+    public void shouldAddBookToLogWhenUserChecksOutBook() {
+        userBookLog = new UserBookLog();
+        Librarian librarian = new Librarian(library, userBookLog, user);
+
+
+        when(library.bookIsInLibrary("We")).thenReturn(true);
+        when(library.getBookFromTitle("We")).thenReturn(Optional.of(book));
+
+        userBookLog.addUserToLog(user);
+        librarian.checkOutBook("We");
+
+        assertTrue(userBookLog.hasUserCheckedOutBook(user, book));
+
+    }
+
+    @Test
+    public void shouldRemoveBookFromLogWhenUserReturnsBook() {
+        userBookLog = new UserBookLog();
+        Librarian librarian = new Librarian(library, userBookLog, user);
+
+        when(library.bookIsInLibrary("We")).thenReturn(true);
+        when(library.getBookFromTitle("We")).thenReturn(Optional.of(book));
+
+        userBookLog.addUserToLog(user);
+        librarian.returnBook("We");
+
+        assertFalse(userBookLog.hasUserCheckedOutBook(user, book));
     }
 }

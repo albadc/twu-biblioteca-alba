@@ -8,24 +8,25 @@ class Runner {
     private Library library;
     private Users users;
     private User user;
-
+    private UserBookLog userBookLog;
 
     void setUser(User user) {
         this.user = user;
     }
 
-    Runner(Library library, InputReader inputReader, Printer printer, Users users) {
+    Runner(Library library, InputReader inputReader, Printer printer, Users users, UserBookLog userBookLog) {
         this.library = library;
         this.inputReader = inputReader;
         this.printer = printer;
         this.users = users;
-        this.librarian = new Librarian(this.library);
+        this.userBookLog = userBookLog;
+        this.librarian = new Librarian(this.library, this.userBookLog, this.user);
     }
-
 
     void start() {
         printer.welcomeMessage();
         if (ableToLogin()) {
+            userBookLog.addUserToLog(user);
             printer.correctLogIn();
             printer.showMainMenu();
             while (true) {

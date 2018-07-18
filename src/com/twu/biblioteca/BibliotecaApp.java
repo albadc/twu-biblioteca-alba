@@ -30,8 +30,10 @@ public class BibliotecaApp {
 //        ArrayList<Book> books2 = new ArrayList<>();
 //        Library library2 = new Library(books2);
 
+        UserBookLog userBookLog = new UserBookLog();
 
-        Runner runner = new Runner(library, inputReader, printer, users);
+
+        Runner runner = new Runner(library, inputReader, printer, users, userBookLog);
         runner.start();
 
 

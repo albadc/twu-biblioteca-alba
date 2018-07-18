@@ -3,7 +3,7 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class Users {
+class Users {
     private ArrayList<User> users;
 
     Users(ArrayList<User> users) {

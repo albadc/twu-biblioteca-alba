@@ -26,7 +26,8 @@ public class RunnerTest {
     User user = new User("123-456", "1234");
     ArrayList<User> validUsers = new ArrayList<>(Collections.singletonList(user));
     Users users = new Users(validUsers);
-    Runner runner = new Runner(library, inputReader, printer, users);
+    UserBookLog userBookLog = new UserBookLog();
+    Runner runner = new Runner(library, inputReader, printer, users, userBookLog);
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
