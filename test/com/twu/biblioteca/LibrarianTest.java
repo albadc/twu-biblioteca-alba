@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 
 public class LibrarianTest {
     Library library = mock(Library.class);
@@ -112,31 +112,25 @@ public class LibrarianTest {
 
     @Test
     public void shouldAddBookToLogWhenUserChecksOutBook() {
-        userBookLog = new UserBookLog();
-        Librarian librarian = new Librarian(library, userBookLog, user);
-
 
         when(library.bookIsInLibrary("We")).thenReturn(true);
         when(library.getBookFromTitle("We")).thenReturn(Optional.of(book));
 
-        userBookLog.addUserToLog(user);
         librarian.checkOutBook("We");
 
-        assertTrue(userBookLog.hasUserCheckedOutBook(user, book));
+        verify(userBookLog).addBookToLog(user, book);
 
     }
 
     @Test
     public void shouldRemoveBookFromLogWhenUserReturnsBook() {
-        userBookLog = new UserBookLog();
-        Librarian librarian = new Librarian(library, userBookLog, user);
 
         when(library.bookIsInLibrary("We")).thenReturn(true);
         when(library.getBookFromTitle("We")).thenReturn(Optional.of(book));
+        when(userBookLog.hasUserCheckedOutBook(user, book)).thenReturn(true);
 
-        userBookLog.addUserToLog(user);
         librarian.returnBook("We");
 
-        assertFalse(userBookLog.hasUserCheckedOutBook(user, book));
+        verify(userBookLog).removeBookFromLog(user, book);
     }
 }

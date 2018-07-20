@@ -24,7 +24,7 @@ class UserBookLog {
 
 
     boolean hasUserCheckedOutBook(User user, Book book) {
-        return userBookLog.get(user).contains(book);
+        return userBookLog.getOrDefault(user, new ArrayList<>()).contains(book);
     }
 
     void removeBookFromLog(User user, Book book) {

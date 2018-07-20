@@ -2,12 +2,12 @@ package com.twu.biblioteca;
 
 import java.util.Optional;
 
-public class Librarian {
+class Librarian {
     private Library library;
     private UserBookLog userBookLog;
     private User user;
 
-    public Librarian(Library library, UserBookLog userBookLog, User user) {
+    Librarian(Library library, UserBookLog userBookLog, User user) {
         this.library = library;
         this.userBookLog = userBookLog;
         this.user = user;

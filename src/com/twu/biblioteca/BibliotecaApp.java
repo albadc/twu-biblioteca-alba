@@ -20,10 +20,14 @@ public class BibliotecaApp {
         InputReader inputReader = new InputReader();
         Printer printer = new Printer();
         User user = new User("123-4567", "1234");
+        User user2 = new User("234-5678", "2345");
         user.setEmail("happyPenguin23@gmail.com");
         user.setName("Misha");
         user.setPhoneNumber("666777888");
-        ArrayList<User> validUsers = new ArrayList<>(Collections.singletonList(user));
+        user2.setName("Luna");
+        user2.setEmail("happyCat5@protonmail.com");
+        user2.setPhoneNumber("678901234");
+        ArrayList<User> validUsers = new ArrayList<>(Arrays.asList(user, user2));
         Users users = new Users(validUsers);
 
 
@@ -37,5 +41,8 @@ public class BibliotecaApp {
         runner.start();
 
 
+
     }
+
+
 }

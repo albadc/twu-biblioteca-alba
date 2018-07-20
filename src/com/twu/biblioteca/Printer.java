@@ -15,7 +15,8 @@ class Printer {
                 "4 - List Movies\n" +
                 "5 - Check Out Movie\n" +
                 "6 - Check user information\n" +
-                "7 - Quit\n");
+                "7 - Log out\n" +
+                "8 - Quit\n");
     }
 
     void selectChoiceNumber() {
@@ -114,5 +115,9 @@ class Printer {
 
     void showUserInfo(User user) {
         System.out.println(user.getName() + TAB + user.getEmail() + TAB + user.getPhoneNumber());
+    }
+
+    void successfulLogOut() {
+        System.out.println("Successfully logged out. Thank you for using Biblioteca!");
     }
 }

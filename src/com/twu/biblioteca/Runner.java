@@ -2,13 +2,14 @@ package com.twu.biblioteca;
 
 class Runner {
 
-    private final Librarian librarian;
+    private Librarian librarian;
     private InputReader inputReader;
     private Printer printer;
     private Library library;
     private Users users;
     private User user;
     private UserBookLog userBookLog;
+    private boolean running;
 
     void setUser(User user) {
         this.user = user;
@@ -20,16 +21,17 @@ class Runner {
         this.printer = printer;
         this.users = users;
         this.userBookLog = userBookLog;
-        this.librarian = new Librarian(this.library, this.userBookLog, this.user);
     }
 
     void start() {
         printer.welcomeMessage();
+        running = true;
         if (ableToLogin()) {
+            this.librarian = new Librarian(this.library, this.userBookLog, this.user);
             userBookLog.addUserToLog(user);
             printer.correctLogIn();
             printer.showMainMenu();
-            while (true) {
+            while (running) {
                 printer.selectChoiceNumber();
                 int userNumber = inputReader.getUserNumber();
                 if (userNumber == -1) printer.invalidOption();
@@ -39,7 +41,8 @@ class Runner {
                 else if (userNumber == 4) showListOfMovies();
                 else if (userNumber == 5) checkOutMovie();
                 else if (userNumber == 6) printer.showUserInfo(user);
-                else if (userNumber == 7) break;
+                else if (userNumber == 7) logOut();
+                else if (userNumber == 8) running = false;
             }
         } else {
             printer.unableToLogInMessage();
@@ -110,5 +113,12 @@ class Runner {
         } else {
             printer.unsuccessfulCheckOutMessageForMovie();
         }
+    }
+
+    void logOut() {
+        setUser(null);
+        printer.successfulLogOut();
+        running = false;
+        start();
     }
 }
